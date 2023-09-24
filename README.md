@@ -24,6 +24,20 @@ the app "Mom & Pop's" will help people feed themselves tasty and healthy homecoo
 From a young age, my mom began teaching me how to cook and bake. I didn't know it then,
 but I now recognize that she was teaching me an invaluable skill. As a student living away
 from home, I enjoy cooking for myself and emulating my mom's recipes. However, I sometimes
-find that I cannot remember certain ingredients that go into making her food. Furthermore, living alone has made me realize that it is
+find that I cannot remember certain ingredients that go into making her food. Furthermore, living alone has made me
+realize that it is
 difficult to manage an inventory of food and keep track of when food expires. **After experiencing
 these problems, I am interested in creating an app that may solve them.**
+
+## User Stories
+
+- As a user, I want to be able to create a new recipe with specified ingredients and preparation time,
+and add it to a list of recipes.
+- As a user, I want to be able to view a list of the titles of the recipes in my collection.
+- As a user, I want to be able to delete a recipe from my collection.
+- As a user, I want to be able to select a recipe in my collection and view the recipe in detail.
+- As a user, I want to be able to add ingredients to a list of ingredients (ie. a virtual pantry).
+- As a user, I want to be able to view a list of the titles of ingredients in my pantry.
+- As a user, I want to be able to discard ingredients from my virtual pantry.
+- As a user, I want to be able to search for recipes that can be made using the ingredients currently
+added to my virtual pantry.
