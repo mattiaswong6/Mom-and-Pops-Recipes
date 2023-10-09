@@ -31,11 +31,13 @@ these problems, I am interested in creating an app that may solve them.**
 
 ## User Stories
 
-- As a user, I want to be able to create a new recipe with specified ingredients and preparation time,
+- As a user, I want to be able to create a new recipe with a name, specified ingredients and preparation time,
 and add it to a list of recipes.
 - As a user, I want to be able to view a list of the titles of the recipes in my collection.
 - As a user, I want to be able to delete a recipe from my collection.
 - As a user, I want to be able to select a recipe in my collection and view the recipe in detail.
+
+
 - As a user, I want to be able to add ingredients to a list of ingredients (ie. a virtual pantry).
 - As a user, I want to be able to view a list of the titles of ingredients in my pantry.
 - As a user, I want to be able to discard ingredients from my virtual pantry.
