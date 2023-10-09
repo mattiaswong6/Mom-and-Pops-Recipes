@@ -21,7 +21,7 @@ public class Recipe {
     // MODIFIES: this
     // EFFECTS: return true if ingredient has not already been added to recipe and add ingredient to recipe,
     // or return false.
-    public Boolean addIngredientToRecipe(Ingredient i) {
+    public boolean addIngredientToRecipe(Ingredient i) {
         for (Ingredient ingredient : this.recipeIngredients) {
             if (Objects.equals(ingredient.getIngredientName(), i.getIngredientName())) {
                 return false;
