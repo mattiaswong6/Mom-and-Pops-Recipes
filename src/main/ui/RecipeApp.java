@@ -105,7 +105,7 @@ public class RecipeApp {
     private void doAddRecipe() {
         System.out.println("What is the name of the recipe?");
         String name = input.next();
-        System.out.println("How long does this recipe take?");
+        System.out.println("How many minutes does this recipe take to make?");
         String timeString = input.next();
         int time = Integer.parseInt(timeString);
         Recipe r = new Recipe(name, time);
@@ -139,6 +139,8 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: keeps producing the add ingredients menu until a valid selection is inputted, produces true if
+    // user selects to add another ingredient and false if user wants to finish recipe.
     private boolean checkValidInput() {
         int valid = 0;
         boolean keepAdding = true;
@@ -170,9 +172,7 @@ public class RecipeApp {
     // EFFECTS: deletes a recipe from the recipe book
     private void doDeleteRecipe() {
         System.out.println("\nPlease type the name of the recipe you would like to delete from the following list:");
-        for (Recipe recipe : recipeList.getRecipes()) {
-            System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
-        }
+        printRecipesInBook();
         String name = input.next();
         Recipe tempRecipe = new Recipe(name, 1);
 
@@ -183,11 +183,22 @@ public class RecipeApp {
         }
     }
 
+    private void printRecipesInBook() {
+        if (recipeList.getRecipes().isEmpty()) {
+            System.out.println("No recipes currently added.");
+        } else {
+            for (Recipe recipe : recipeList.getRecipes()) {
+                System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
+            }
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: initializes recipe list
     private void init() {
         recipeList = new RecipeList();
         input = new Scanner(System.in);
+        input.useDelimiter("\n");
     }
 
     // EFFECTS: displays menu of options to user
