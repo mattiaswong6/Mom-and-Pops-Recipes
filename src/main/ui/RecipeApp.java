@@ -86,7 +86,8 @@ public class RecipeApp {
             for (Recipe recipe : recipeList.getRecipes()) {
                 if (name.equalsIgnoreCase(recipe.getRecipeName())) {
                     foundRecipe = true;
-                    System.out.println("\n~~~ Recipe for " + recipe.getRecipeName() + " ~~~");
+                    System.out.println("\n~~~ Recipe for " + recipe.getRecipeName() + " (" + recipe.getPrepTime()
+                            + " minutes) ~~~");
                     for (Ingredient ingredient : recipe.getRecipeIngredients()) {
                         System.out.println("\t‣" + ingredient.getIngredientName());
                     }
@@ -117,8 +118,8 @@ public class RecipeApp {
 
             while (keepAdding) {
                 System.out.println("Add an ingredient below.");
-                String newIngredient = input.next();
-                Ingredient i = new Ingredient(newIngredient);
+                String ingredientName = input.next();
+                Ingredient i = new Ingredient(ingredientName);
                 if (r.addIngredientToRecipe(i)) {
                     System.out.println(i.getIngredientName() + " added to recipe.");
                 } else {
