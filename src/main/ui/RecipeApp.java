@@ -65,7 +65,7 @@ public class RecipeApp {
         }
 
         for (Recipe recipe : recipeList.getRecipes()) {
-            System.out.println("\t‣" + recipe.getRecipeName() + " (" + recipe.getPrepTime() + " minutes)");
+            System.out.println("\t- " + recipe.getRecipeName() + " (" + recipe.getPrepTime() + " minutes)");
         }
     }
 
@@ -76,7 +76,7 @@ public class RecipeApp {
         } else {
             System.out.println("\nWhich recipe would you like to see from the following list?");
             for (Recipe recipe : recipeList.getRecipes()) {
-                System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
+                System.out.println("\t- " + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
             }
 
             String name = input.next();
@@ -89,7 +89,7 @@ public class RecipeApp {
                     System.out.println("\n~~~ Recipe for " + recipe.getRecipeName() + " (" + recipe.getPrepTime()
                             + " minutes) ~~~");
                     for (Ingredient ingredient : recipe.getRecipeIngredients()) {
-                        System.out.println("\t‣" + ingredient.getIngredientName());
+                        System.out.println("\t- " + ingredient.getIngredientName());
                     }
                 }
             }
@@ -188,7 +188,7 @@ public class RecipeApp {
             System.out.println("No recipes currently added.");
         } else {
             for (Recipe recipe : recipeList.getRecipes()) {
-                System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
+                System.out.println("\t- " + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
             }
         }
     }
