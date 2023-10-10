@@ -28,7 +28,6 @@ public class RecipeApp {
         while (keepGoing) {
             displayGeneralMenu();
             command = input.next();
-            command = command.toLowerCase();
 
             if (command.equals("5")) {
                 keepGoing = false;
@@ -48,10 +47,10 @@ public class RecipeApp {
             doShowRecipes();
         } else if (command.equals("2")) {
             doShowRecipe();
-//        } else if (command.equals("3")) {
-//            doAddRecipe();
+        } else if (command.equals("3")) {
+            doAddRecipe();
 //        } else if (command.equals("4")) {
-//            doTransfer();
+//            doDeleteRecipe();
 //        } else {
 //            System.out.println("Selection not valid...");
         }
@@ -61,10 +60,12 @@ public class RecipeApp {
     private void doShowRecipes() {
         if (recipeList.getRecipes().isEmpty()) {
             System.out.println("No recipes currently added.");
+        } else {
+            System.out.println("\nThe recipe book has the following recipes added:");
         }
 
         for (Recipe recipe : recipeList.getRecipes()) {
-            System.out.println(recipe.getRecipeName());
+            System.out.println("\t‣" + recipe.getRecipeName() + " (" + recipe.getPrepTime() + " minutes)");
         }
     }
 
@@ -73,38 +74,118 @@ public class RecipeApp {
         if (recipeList.getRecipes().isEmpty()) {
             System.out.println("No recipes currently added.");
         } else {
-            System.out.println("Which recipe would you like to see?");
+            System.out.println("\nWhich recipe would you like to see?");
             for (Recipe recipe : recipeList.getRecipes()) {
-                System.out.println(recipe.getRecipeName());
+                System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
             }
 
             String name = input.next();
 
+            boolean foundRecipe = false;
+
             for (Recipe recipe : recipeList.getRecipes()) {
                 if (name.equalsIgnoreCase(recipe.getRecipeName())) {
+                    foundRecipe = true;
+                    System.out.println("\n~~~ Recipe for " + recipe.getRecipeName() + " ~~~");
                     for (Ingredient ingredient : recipe.getRecipeIngredients()) {
-                        System.out.println(ingredient.getIngredientName());
+                        System.out.println("\t‣" + ingredient.getIngredientName());
                     }
                 }
             }
 
-            System.out.println("Sorry, there are no recipes of that name in this recipe book.");
+            if (!foundRecipe) {
+                System.out.println("Sorry, there are no recipes of that name in this recipe book.");
+            }
         }
     }
 
+    @SuppressWarnings("methodlength")
+    // MODIFIES: this
     // EFFECTS: adds a recipe to the recipe book
-//    private void doAddRecipe() {
-//        System.out.println("What is the name of the recipe?");
+    private void doAddRecipe() {
+        System.out.println("What is the name of the recipe?");
+        String name = input.next();
+        System.out.println("How long does this recipe take?");
+        String timeString = input.next();
+        int time = Integer.parseInt(timeString);
+        Recipe r = new Recipe(name, time);
+        if (recipeList.addRecipe(r)) {
+            System.out.println("New recipe " + name + " (" + time + " mins) created.");
+            boolean keepAdding = true;
+            while (keepAdding) {
+                System.out.println("Type an ingredient below.");
+                String newIngredient = input.next();
+                Ingredient i = new Ingredient(newIngredient);
+                if (r.addIngredientToRecipe(i)) {
+                    System.out.println(i.getIngredientName() + " added to recipe.");
+                } else {
+                    System.out.println("Ingredient already added to recipe.");
+                }
+                displayAddingMenu();
+                String command = input.next();
+                if (command.equals("2")) {
+                    keepAdding = false;
+                }
+            }
+            System.out.println("Recipe for " + name + " finished and added to recipe book!");
+        } else {
+            System.out.println("Sorry, recipe for " + name + " already exists.");
+        }
+    }
+
+    private void displayAddingMenu() {
+        System.out.println("\nSelect from:");
+        System.out.println("\t1 -> Add Another Ingredient");
+        System.out.println("\t2 -> Finish Recipe");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: deletes a recipe from the recipe book
+//    private void doDeleteRecipe() {
+//        System.out.println("\nPlease type the name of the recipe you would like to delete:");
+//        for (Recipe recipe : recipeList.getRecipes()) {
+//            System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
+//        }
 //        String name = input.next();
-//        System.out.println("New recipe for " + name + " created. How long does this recipe take to make?");
-//        String time = input.next();
 //
-//        recipeList.addRecipe();
+//        boolean foundRecipe = false;
 //
-//        System.out.println(name + " takes " + time + " minutes to make. Please add your first ingredient below.");
-//        r = new Recipe(name, time);
-//        boolean keepAdding = true;
+//        for (Recipe recipe : recipeList.getRecipes()) {
+//            if (recipeList.deleteRecipe()
 //
+//
+//                    name.equalsIgnoreCase(recipe.getRecipeName())) {
+//                foundRecipe = true;
+//                recipeList.deleteRecipe()
+//                System.out.println("\n~~~ Recipe for " + recipe.getRecipeName() + " ~~~");
+//                for (Ingredient ingredient : recipe.getRecipeIngredients()) {
+//                    System.out.println("\t‣" + ingredient.getIngredientName());
+//                }
+//            }
+//        }
+//
+//        if (!foundRecipe) {
+//            System.out.println("Sorry, there are no recipes of that name in this recipe book.");
+//        }
+//
+//    }
+
+//            if (checkName(name)) {
+//            System.out.println("Sorry, recipe for " + name + " already exists.");
+//        } else {
+//            System.out.println("New recipe for " + name + " created. How long does this recipe take to make?");
+//            String time = input.next();
+
+//    private boolean checkName(String n) {
+//        boolean nameExists = false;
+//        for (Recipe recipe : recipeList.getRecipes()) {
+//            if (n.equalsIgnoreCase(recipe.getRecipeName())) {
+//                nameExists = true;
+//                break;
+//            }
+//        }
+//
+//        return nameExists;
 //
 //    }
 
