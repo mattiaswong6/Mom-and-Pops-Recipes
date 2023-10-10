@@ -49,10 +49,10 @@ public class RecipeApp {
             doShowRecipe();
         } else if (command.equals("3")) {
             doAddRecipe();
-//        } else if (command.equals("4")) {
-//            doDeleteRecipe();
-//        } else {
-//            System.out.println("Selection not valid...");
+        } else if (command.equals("4")) {
+            doDeleteRecipe();
+        } else {
+            System.out.println("Selection not valid...");
         }
     }
 
@@ -74,7 +74,7 @@ public class RecipeApp {
         if (recipeList.getRecipes().isEmpty()) {
             System.out.println("No recipes currently added.");
         } else {
-            System.out.println("\nWhich recipe would you like to see?");
+            System.out.println("\nWhich recipe would you like to see from the following list?");
             for (Recipe recipe : recipeList.getRecipes()) {
                 System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
             }
@@ -109,11 +109,14 @@ public class RecipeApp {
         String timeString = input.next();
         int time = Integer.parseInt(timeString);
         Recipe r = new Recipe(name, time);
+
         if (recipeList.addRecipe(r)) {
             System.out.println("New recipe " + name + " (" + time + " mins) created.");
+
             boolean keepAdding = true;
+
             while (keepAdding) {
-                System.out.println("Type an ingredient below.");
+                System.out.println("Add an ingredient below.");
                 String newIngredient = input.next();
                 Ingredient i = new Ingredient(newIngredient);
                 if (r.addIngredientToRecipe(i)) {
@@ -141,53 +144,20 @@ public class RecipeApp {
 
     // MODIFIES: this
     // EFFECTS: deletes a recipe from the recipe book
-//    private void doDeleteRecipe() {
-//        System.out.println("\nPlease type the name of the recipe you would like to delete:");
-//        for (Recipe recipe : recipeList.getRecipes()) {
-//            System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
-//        }
-//        String name = input.next();
-//
-//        boolean foundRecipe = false;
-//
-//        for (Recipe recipe : recipeList.getRecipes()) {
-//            if (recipeList.deleteRecipe()
-//
-//
-//                    name.equalsIgnoreCase(recipe.getRecipeName())) {
-//                foundRecipe = true;
-//                recipeList.deleteRecipe()
-//                System.out.println("\n~~~ Recipe for " + recipe.getRecipeName() + " ~~~");
-//                for (Ingredient ingredient : recipe.getRecipeIngredients()) {
-//                    System.out.println("\t‣" + ingredient.getIngredientName());
-//                }
-//            }
-//        }
-//
-//        if (!foundRecipe) {
-//            System.out.println("Sorry, there are no recipes of that name in this recipe book.");
-//        }
-//
-//    }
+    private void doDeleteRecipe() {
+        System.out.println("\nPlease type the name of the recipe you would like to delete from the following list:");
+        for (Recipe recipe : recipeList.getRecipes()) {
+            System.out.println("\t‣" + recipe.getRecipeName() + "(" + recipe.getPrepTime() + " minutes)");
+        }
+        String name = input.next();
+        Recipe tempRecipe = new Recipe(name, 1);
 
-//            if (checkName(name)) {
-//            System.out.println("Sorry, recipe for " + name + " already exists.");
-//        } else {
-//            System.out.println("New recipe for " + name + " created. How long does this recipe take to make?");
-//            String time = input.next();
-
-//    private boolean checkName(String n) {
-//        boolean nameExists = false;
-//        for (Recipe recipe : recipeList.getRecipes()) {
-//            if (n.equalsIgnoreCase(recipe.getRecipeName())) {
-//                nameExists = true;
-//                break;
-//            }
-//        }
-//
-//        return nameExists;
-//
-//    }
+        if (recipeList.deleteRecipe(tempRecipe)) {
+            System.out.println("Recipe for " + name + " successfully deleted from recipe book.");
+        } else {
+            System.out.println("Sorry, recipe for " + name + " does not exist.");
+        }
+    }
 
     // MODIFIES: this
     // EFFECTS: initializes recipe list
