@@ -23,7 +23,7 @@ public class Recipe {
     // or return false.
     public boolean addIngredientToRecipe(Ingredient i) {
         for (Ingredient ingredient : this.recipeIngredients) {
-            if (Objects.equals(ingredient.getIngredientName(), i.getIngredientName())) {
+            if (i.getIngredientName().equalsIgnoreCase(ingredient.getIngredientName())) {
                 return false;
             }
         }

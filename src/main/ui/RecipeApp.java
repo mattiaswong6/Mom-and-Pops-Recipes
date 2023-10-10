@@ -56,7 +56,7 @@ public class RecipeApp {
         }
     }
 
-    // EFFECTS: produces the list of recipes currently added to the recipe manager
+    // EFFECTS: shows the list of recipes currently added to the recipe manager
     private void doShowRecipes() {
         if (recipeList.getRecipes().isEmpty()) {
             System.out.println("No recipes currently added.");
@@ -69,7 +69,7 @@ public class RecipeApp {
         }
     }
 
-    // EFFECTS: produces a singular recipe with a list of ingredients contained in the recipe
+    // EFFECTS: show a singular recipe's title, prep time, and list of ingredients contained in the recipe
     private void doShowRecipe() {
         if (recipeList.getRecipes().isEmpty()) {
             System.out.println("No recipes currently added.");
@@ -100,7 +100,6 @@ public class RecipeApp {
         }
     }
 
-    @SuppressWarnings("methodlength")
     // MODIFIES: this
     // EFFECTS: adds a recipe to the recipe book
     private void doAddRecipe() {
@@ -113,30 +112,54 @@ public class RecipeApp {
 
         if (recipeList.addRecipe(r)) {
             System.out.println("New recipe " + name + " (" + time + " mins) created.");
+            keepAddingIngredients(r);
 
-            boolean keepAdding = true;
-
-            while (keepAdding) {
-                System.out.println("Add an ingredient below.");
-                String ingredientName = input.next();
-                Ingredient i = new Ingredient(ingredientName);
-                if (r.addIngredientToRecipe(i)) {
-                    System.out.println(i.getIngredientName() + " added to recipe.");
-                } else {
-                    System.out.println("Ingredient already added to recipe.");
-                }
-                displayAddingMenu();
-                String command = input.next();
-                if (command.equals("2")) {
-                    keepAdding = false;
-                }
-            }
             System.out.println("Recipe for " + name + " finished and added to recipe book!");
         } else {
             System.out.println("Sorry, recipe for " + name + " already exists.");
         }
     }
 
+    // MODIFIES: r
+    // EFFECTS: adds an ingredient to a given recipe and allows user to keep adding ingredients or finish recipe
+    private void keepAddingIngredients(Recipe r) {
+        boolean keepAdding = true;
+
+        while (keepAdding) {
+            System.out.println("Add an ingredient below.");
+            String ingredientName = input.next();
+            Ingredient i = new Ingredient(ingredientName);
+            if (r.addIngredientToRecipe(i)) {
+                System.out.println(i.getIngredientName() + " added to recipe.");
+            } else {
+                System.out.println("Ingredient already added to recipe.");
+            }
+
+            keepAdding = checkValidInput();
+        }
+    }
+
+    private boolean checkValidInput() {
+        int valid = 0;
+        boolean keepAdding = true;
+        while (valid == 0) {
+            displayAddingMenu();
+            String command = input.next();
+            if (command.equals("2")) {
+                keepAdding = false;
+                valid = 1;
+            } else if (command.equals("1")) {
+                valid = 1;
+            } else {
+                System.out.println("Selection not valid....");
+            }
+        }
+
+        return keepAdding;
+    }
+
+
+    // EFFECTS: displays menu of options for user when building a recipe
     private void displayAddingMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\t1 -> Add Another Ingredient");

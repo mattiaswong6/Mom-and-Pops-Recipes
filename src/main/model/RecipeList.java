@@ -16,7 +16,7 @@ public class RecipeList {
     // else return false.
     public boolean addRecipe(Recipe r) {
         for (Recipe recipe : this.recipes) {
-            if (Objects.equals(recipe.getRecipeName(), r.getRecipeName())) {
+            if (r.getRecipeName().equalsIgnoreCase(recipe.getRecipeName())) {
                 return false;
             }
         }
@@ -30,7 +30,7 @@ public class RecipeList {
     // else return false.
     public boolean deleteRecipe(Recipe r) {
         for (Recipe recipe : this.recipes) {
-            if (Objects.equals(recipe.getRecipeName(), r.getRecipeName())) {
+            if (r.getRecipeName().equalsIgnoreCase(recipe.getRecipeName())) {
                 this.recipes.remove(recipe);
                 return true;
             }
