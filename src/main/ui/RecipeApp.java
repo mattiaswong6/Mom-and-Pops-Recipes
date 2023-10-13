@@ -183,6 +183,7 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: prints the list of recipes in the recipe list, or prints no recipes added if the list is empty.
     private void printRecipesInBook() {
         if (recipeList.getRecipes().isEmpty()) {
             System.out.println("No recipes currently added.");
