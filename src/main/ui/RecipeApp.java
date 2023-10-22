@@ -12,7 +12,7 @@ import java.util.*;
 
 // recipe manager application
 public class RecipeApp {
-    private static final String JSON_STORE = "./data/workroom.json";
+    private static final String JSON_STORE = "./data/recipeList.json";
     private RecipeList recipeList;
     private Scanner input;
     private JsonWriter jsonWriter;
