@@ -1,6 +1,9 @@
 package model;
 
-public class Ingredient {
+import org.json.JSONObject;
+import persistence.Writable;
+
+public class Ingredient implements Writable {
     private final String name;
 
     public Ingredient(String name) {
@@ -9,5 +12,13 @@ public class Ingredient {
 
     public String getIngredientName() {
         return this.name;
+    }
+
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        return json;
     }
 }

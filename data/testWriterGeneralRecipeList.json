@@ -1,0 +1,22 @@
+{
+    "recipes": [
+        {
+            "name": "Chicken Wings",
+            "ingredients": [
+                {"name": "salt"},
+                {"name": "chicken"},
+                {"name": "oil"}
+            ],
+            "prepTime": 10
+        },
+        {
+            "name": "Steak",
+            "ingredients": [
+                {"name": "beef"},
+                {"name": "salt"}
+            ],
+            "prepTime": 20
+        }
+    ],
+    "name": "Mom and Pop's Recipes"
+}

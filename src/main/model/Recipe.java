@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Recipe {
+public class Recipe implements Writable {
     private final String name;
     private List<Ingredient> recipeIngredients;
     private final int prepTime;
@@ -43,5 +47,25 @@ public class Recipe {
 
     public List<Ingredient> getRecipeIngredients() {
         return this.recipeIngredients;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("prepTime", prepTime);
+        json.put("ingredients", ingredientsToJson());
+        return json;
+    }
+
+    // EFFECTS: returns ingredients in this recipe as a JSON array
+    private JSONArray ingredientsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Ingredient i : recipeIngredients) {
+            jsonArray.put(i.toJson());
+        }
+
+        return jsonArray;
     }
 }

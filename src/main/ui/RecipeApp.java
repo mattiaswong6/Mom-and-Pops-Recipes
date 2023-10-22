@@ -197,7 +197,7 @@ public class RecipeApp {
     // MODIFIES: this
     // EFFECTS: initializes recipe list
     private void init() {
-        recipeList = new RecipeList();
+        recipeList = new RecipeList("Mom and Pop's Recipes");
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
