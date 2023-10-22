@@ -3,13 +3,20 @@ package ui;
 import model.Ingredient;
 import model.Recipe;
 import model.RecipeList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 // recipe manager application
 public class RecipeApp {
+    private static final String JSON_STORE = "./data/workroom.json";
     private RecipeList recipeList;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
 
     // EFFECTS: runs the recipe app
@@ -29,7 +36,7 @@ public class RecipeApp {
             displayGeneralMenu();
             command = input.next();
 
-            if (command.equals("5")) {
+            if (command.equals("7")) {
                 keepGoing = false;
             } else {
                 processCommand(command);
@@ -51,6 +58,10 @@ public class RecipeApp {
             doAddRecipe();
         } else if (command.equals("4")) {
             doDeleteRecipe();
+        } else if (command.equals("5")) {
+            saveRecipeList();
+        } else if (command.equals("6")) {
+            loadRecipeList();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -183,6 +194,29 @@ public class RecipeApp {
         }
     }
 
+    // EFFECTS: saves the recipe list to file
+    private void saveRecipeList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(recipeList);
+            jsonWriter.close();
+            System.out.println("Saved " + recipeList.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads recipeList from file
+    private void loadRecipeList() {
+        try {
+            recipeList = jsonReader.read();
+            System.out.println("Loaded " + recipeList.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
     // EFFECTS: prints the list of recipes in the recipe list, or prints no recipes added if the list is empty.
     private void printRecipesInBook() {
         if (recipeList.getRecipes().isEmpty()) {
@@ -200,6 +234,8 @@ public class RecipeApp {
         recipeList = new RecipeList("Mom and Pop's Recipes");
         input = new Scanner(System.in);
         input.useDelimiter("\n");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // EFFECTS: displays menu of options to user
@@ -209,7 +245,9 @@ public class RecipeApp {
         System.out.println("\t2 -> View Specific Recipe");
         System.out.println("\t3 -> Add Recipe");
         System.out.println("\t4 -> Delete Recipe");
-        System.out.println("\t5 -> Quit");
+        System.out.println("\t5 -> Save Recipe List to File");
+        System.out.println("\t6 -> Load Recipe List from File");
+        System.out.println("\t7 -> Quit");
     }
 
 

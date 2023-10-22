@@ -12,6 +12,7 @@ import model.RecipeList;
 import org.json.*;
 
 // Represents a reader that reads recipe list from JSON data stored in file
+// Code influenced by the JsonSerializationDemo https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
 public class JsonReader {
     private String source;
 
