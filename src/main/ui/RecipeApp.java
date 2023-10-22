@@ -20,13 +20,13 @@ public class RecipeApp {
 
 
     // EFFECTS: runs the recipe app
-    public RecipeApp() {
+    public RecipeApp() throws IOException {
         runRecipeApp();
     }
 
     // MODIFIES: this
     // EFFECTS: process user input
-    private void runRecipeApp() {
+    private void runRecipeApp() throws IOException {
         boolean keepGoing = true;
         String command = null;
 
@@ -37,7 +37,10 @@ public class RecipeApp {
             command = input.next();
 
             if (command.equals("7")) {
-                keepGoing = false;
+                showQuitReminder();
+                command = input.next();
+                keepGoing = !processQuittingCommand(command);
+
             } else {
                 processCommand(command);
             }
@@ -46,6 +49,109 @@ public class RecipeApp {
         System.out.println("\nGoodbye!");
 
     }
+
+    private boolean processQuittingCommand(String command) {
+        boolean doQuit = false;
+        boolean keepGoing = true;
+        while (keepGoing) {
+            if (command.equals("1")) {
+                saveRecipeList();
+                keepGoing = false;
+                doQuit = true;
+            } else if (command.equals("2")) {
+                System.out.println("\nRecipe list not saved.");
+                keepGoing = false;
+                doQuit = true;
+            } else if (command.equals("3")) {
+                doQuit = false;
+                keepGoing = false;
+            } else {
+                System.out.println("Selection not valid...");
+                keepGoing = false;
+                doQuit = false;
+            }
+        }
+        return doQuit;
+    }
+
+    // EFFECTS: gives the user the option to save recipe list to file before quitting
+    private void showQuitReminder() {
+        System.out.println("\nWould you like to save your recipe list before quitting?");
+        System.out.println("\t1 -> Yes, save this recipe list and quit");
+        System.out.println("\t2 -> No, don't save and quit");
+        System.out.println("\t3 -> Go back to main menu");
+    }
+
+//    private boolean processQuit() throws IOException {
+//        RecipeList tempRecipeList = jsonReader.read();
+//        if (recipesMatch() && ingredientsMatch()) {
+//            return false;
+//        } else {
+//            System.out.println("Your current recipe list does not match the current file save."
+//                    + "Would you like to save?");
+//
+//            return true;
+//        }
+//    }
+//
+// // EFFECTS: produces true if the recipes in the current json file match the recipe added to the current recipe list
+//    //          otherwise false
+//    private boolean recipesMatch() throws IOException {
+//        boolean match = false;
+//        RecipeList tempRecipeList = jsonReader.read();
+//        for (Recipe r : tempRecipeList.getRecipes()) {
+//            if (recipeList.getRecipes().contains(r)) {
+//                match = true;
+//            } else {
+//                match = false;
+//                break;
+//            }
+//        }
+//
+//        for (Recipe r : recipeList.getRecipes()) {
+//            if (tempRecipeList.getRecipes().contains(r)) {
+//                match = true;
+//            } else {
+//                match = false;
+//                break;
+//            }
+//        }
+//
+//        return match;
+//    }
+//
+//    @SuppressWarnings("methodlength")
+//    private boolean ingredientsMatch() throws IOException {
+//        boolean match = false;
+//        RecipeList tempRecipeList = jsonReader.read();
+//
+//        for (Recipe r : tempRecipeList.getRecipes()) {
+//            List<Ingredient> ingredientsInR = r.getRecipeIngredients();
+//            for (Ingredient i : ingredientsInR) {
+//                if (recipeList.getAllIngredients().contains(i)) {
+//                    match = true;
+//                } else {
+//                    match = false;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        for (Recipe r : recipeList.getRecipes()) {
+//            List<Ingredient> ingredientsInR = r.getRecipeIngredients();
+//            for (Ingredient i : r.getRecipeIngredients()) {
+//                if (tempRecipeList.getAllIngredients().contains(i)) {
+//                    match = true;
+//                } else {
+//                    match = false;
+//                    break;
+//                }
+//            }
+//        }
+//
+//        return match;
+//    }
+
 
     // MODIFIES: this
     // EFFECTS: processes user command

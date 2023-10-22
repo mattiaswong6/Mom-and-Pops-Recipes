@@ -47,5 +47,5 @@ added to my virtual pantry.
 
 - As a user, when I select the quit option from the application menu, I want to be reminded to save my recipe book
 to file and have the option to do so or not.
-- As a user, when I start the application, I want to be given the option to load my recipe book from file.
+- As a user, I want to be given the option to load my recipe book from file.
 
