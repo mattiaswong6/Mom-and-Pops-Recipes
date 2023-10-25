@@ -50,6 +50,9 @@ public class RecipeApp {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes user command when showing quit menu, returns true if user wants to quit,
+    //          else returns false
     private boolean processQuittingCommand(String command) {
         boolean doQuit = false;
         boolean keepGoing = true;

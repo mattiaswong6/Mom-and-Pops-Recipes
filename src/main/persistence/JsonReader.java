@@ -73,7 +73,7 @@ public class JsonReader {
         rl.addRecipe(recipe);
     }
 
-    // MODIFIES: rl
+    // MODIFIES: r
     // EFFECTS: parses ingredients from JSON object and adds it to recipe
     private void addIngredient(Recipe r, JSONObject jsonObject) {
         String name = jsonObject.getString("name");
