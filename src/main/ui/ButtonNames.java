@@ -5,9 +5,7 @@ public enum ButtonNames {
     SAVE("Save"),
     LOAD("Load"),
     QUIT("Quit"),
-    SAVE_QUIT("Yes, save and quit"),
-    DONT_SAVE_QUIT("No, don't save and quit"),
-    GO_BACK("Go back to menu");
+    ADD("Add New Recipe");
 
     private final String name;
 

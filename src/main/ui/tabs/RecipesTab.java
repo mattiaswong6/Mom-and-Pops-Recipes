@@ -1,39 +1,58 @@
 package ui.tabs;
 
+import ui.ButtonNames;
 import ui.RecipeAppUI;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
-public class RecipesTab extends Tab implements ListSelectionListener {
-    private JList list;
-    private DefaultListModel listModel;
-
-    private JButton viewButton;
-    private JButton addButton;
-    private JButton deleteButton;
-    private JTextField recipeName;
+public class RecipesTab extends Tab {
+    private JPanel list;
 
     //EFFECTS: constructs a recipes tab for console with scroll pane of recipes
     public RecipesTab(RecipeAppUI controller) {
         super(controller);
+        setLayout(new BorderLayout());
 
-        setLayout(new GridLayout(3, 1));
+        list = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        list.add(new JPanel(), gbc);
 
-//        listModel = new DefaultListModel();
-//        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//        list.setSelectedIndex(0);
-//        list.addListSelectionListener(this);
-//        list.setVisibleRowCount(5);
-//        JScrollPane listScrollPane = new JScrollPane(list);
-    }
-
-
-
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
+        add(new JScrollPane(list));
+        list.add(new JButton(new AddRecipeAction()));
 
     }
+
+    // Adds a recipe to the recipe list with a given prep time and set of ingredients
+    private class AddRecipeAction extends AbstractAction {
+
+        AddRecipeAction() {
+            super("Add Recipe");
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String buttonPressed = e.getActionCommand();
+            if (buttonPressed.equals(ButtonNames.ADD.getValue())) {
+                String recipeEntered = JOptionPane.showInputDialog(null,
+                        "What is the name of this recipe?",
+                        "New Recipe",
+                        JOptionPane.QUESTION_MESSAGE);
+//                try {
+//                    if (recipeEntered != null) {
+//                        Recipe r = new Recipe(ac)
+//                    }
+//                }
+
+
+            }
+        }
+    }
+
 }

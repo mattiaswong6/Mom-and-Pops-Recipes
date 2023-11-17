@@ -6,8 +6,6 @@ import ui.RecipeAppUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
 
 public class HomeTab extends Tab {
     private static final String INIT_GREETING = "Welcome to Mom and Pop's Recipes!";
