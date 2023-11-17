@@ -8,6 +8,7 @@ import ui.tabs.*;
 
 
 import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -20,7 +21,6 @@ public class RecipeAppUI extends JFrame {
 
     private static final String JSON_STORE = "./data/recipeList.json";
     private RecipeList recipeList;
-    private Scanner input;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -36,6 +36,8 @@ public class RecipeAppUI extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         recipeList = new RecipeList("Mom and Pops Recipes");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
 
         topbar = new JTabbedPane();
         topbar.setTabPlacement(JTabbedPane.TOP);
@@ -64,7 +66,34 @@ public class RecipeAppUI extends JFrame {
         return topbar;
     }
 
+    // EFFECTS: saves the recipe list to file
+    public String saveRecipeList() {
+        String returnMessage = null;
+        try {
+            jsonWriter.open();
+            jsonWriter.write(recipeList);
+            jsonWriter.close();
+            returnMessage = "Recipe List successfully saved!";
+//            System.out.println("Saved " + recipeList.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            returnMessage = "Unable to save!";
+//            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+        return returnMessage;
+    }
 
+    // MODIFIES: this
+    // EFFECTS: loads recipeList from file
+    public String loadRecipeList() {
+        String returnMessage = null;
+        try {
+            recipeList = jsonReader.read();
+            returnMessage = "Loaded " + recipeList.getName() + " from " + JSON_STORE;
+        } catch (IOException e) {
+            returnMessage = "Unable to read from file: " + JSON_STORE;
+        }
+        return returnMessage;
+    }
 
 
 
