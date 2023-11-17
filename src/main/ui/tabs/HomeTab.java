@@ -75,7 +75,7 @@ public class HomeTab extends Tab {
             if (buttonPressed.equals(ButtonNames.SAVE.getValue())) {
                 String returnedMessage = getController().saveRecipeList();
                 JOptionPane.showMessageDialog(null, returnedMessage,
-                        "Save Status", JOptionPane.ERROR_MESSAGE);
+                        "Save Status", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }
@@ -96,7 +96,7 @@ public class HomeTab extends Tab {
             if (buttonPressed.equals(ButtonNames.LOAD.getValue())) {
                 String returnedMessage = getController().loadRecipeList();
                 JOptionPane.showMessageDialog(null, returnedMessage,
-                        "Load Status", JOptionPane.ERROR_MESSAGE);
+                        "Load Status", JOptionPane.PLAIN_MESSAGE);
             }
         }
     }

@@ -2,8 +2,8 @@ package ui;
 
 public enum ButtonNames {
     VIEW_RECIPES("View Recipes"),
-    SAVE("Save"),
-    LOAD("Load"),
+    SAVE("Save Recipes"),
+    LOAD("Load Recipes"),
     QUIT("Quit"),
     ADD("Add New Recipe");
 
