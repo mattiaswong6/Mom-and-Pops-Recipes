@@ -1,13 +1,12 @@
 package ui.tabs;
 
+import model.Ingredient;
 import model.Recipe;
 import model.exception.DuplicateRecipeException;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
@@ -49,10 +48,11 @@ public class RecipesTab extends Tab {
                     if (recipeEntered != null) {
                         Recipe r = new Recipe(recipeEntered, 0);
                         getController().getRecipeList().addRecipe(r);
-                        finishRecipe(r);
+                        givePrepTime(r);
                     }
                 } catch (DuplicateRecipeException exception) {
-                    JOptionPane.showMessageDialog(null, "Recipe already exists",
+                    JOptionPane.showMessageDialog(null,
+                            "Recipe for " + recipeEntered + " already exists!",
                             "System Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
@@ -60,7 +60,7 @@ public class RecipesTab extends Tab {
         }
     }
 
-    public void finishRecipe(Recipe r) {
+    public void givePrepTime(Recipe r) {
         String prepTimeEntered = JOptionPane.showInputDialog(null,
                 "How many minutes does this recipe take to make?",
                 "New Recipe",
@@ -73,6 +73,43 @@ public class RecipesTab extends Tab {
                     "System Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+
+        addIngredients(r);
     }
+
+    public void addIngredients(Recipe r) {
+        boolean keepAdding = true;
+        while (keepAdding) {
+            String ingredientEntered = JOptionPane.showInputDialog(null,
+                    "Enter the ingredient you want to add",
+                    "Add Ingredient",
+                    JOptionPane.QUESTION_MESSAGE);
+            Ingredient i = new Ingredient(ingredientEntered);
+            if (!r.addIngredientToRecipe(i)) {
+                showDuplicateError();
+            }
+
+            Object[] options = {"Add another ingredient",
+                    "Finish recipe"};
+            int reply = JOptionPane.showOptionDialog(null,
+                    "Would you like to add another ingredient or finish recipe?",
+                    "Add to or Save Recipe", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+            if (reply == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(null,
+                        "Recipe for " + r.getRecipeName() + " successfully added!",
+                        "Load Status", JOptionPane.PLAIN_MESSAGE);
+                keepAdding = false;
+            }
+        }
+    }
+
+    public void showDuplicateError() {
+        JOptionPane.showMessageDialog(null, "Ingredient already added!",
+                "Duplicate Ingredient Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
 
 }
