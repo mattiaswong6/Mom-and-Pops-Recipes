@@ -19,6 +19,24 @@
     },
 
     {
+      "name": "Chicken Wings",
+      "prepTime": 10,
+
+      "ingredients": [
+        {
+          "name": "salt"
+        },
+        {
+          "name": "chicken"
+        },
+        {
+          "name": "oil"
+        }
+      ]
+
+    },
+
+    {
       "name": "Steak",
       "prepTime": 20,
 
