@@ -95,6 +95,10 @@ public class RecipeAppUI extends JFrame {
         return returnMessage;
     }
 
+    public RecipeList getRecipeList() {
+        return this.recipeList;
+    }
+
 
 
 }

@@ -11,7 +11,7 @@ import java.util.Objects;
 public class Recipe implements Writable {
     private final String name;
     private List<Ingredient> recipeIngredients;
-    private final int prepTime;
+    private int prepTime;
 
     // REQUIRES: recipeName has a non-zero length, time > 0.
     // EFFECTS: creates a new Recipe with a given name and prep time (in minutes),
@@ -68,4 +68,12 @@ public class Recipe implements Writable {
 
         return jsonArray;
     }
+
+    // MODIFIES: this
+    // REQUIRES: time > 0
+    // EFFECTS: changes the prep time of the recipe to a new given time (in minutes)
+    public void changePrepTime(int time) {
+        this.prepTime = time;
+    }
+
 }

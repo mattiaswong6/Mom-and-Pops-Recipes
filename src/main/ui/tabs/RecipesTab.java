@@ -1,6 +1,7 @@
 package ui.tabs;
 
 import model.Recipe;
+import model.exception.DuplicateRecipeException;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
 
@@ -44,14 +45,33 @@ public class RecipesTab extends Tab {
                         "What is the name of this recipe?",
                         "New Recipe",
                         JOptionPane.QUESTION_MESSAGE);
-//                try {
-//                    if (recipeEntered != null) {
-//                        Recipe r = new Recipe(ac)
-//                    }
-//                }
-
-
+                try {
+                    if (recipeEntered != null) {
+                        Recipe r = new Recipe(recipeEntered, 0);
+                        getController().getRecipeList().addRecipe(r);
+                        finishRecipe(r);
+                    }
+                } catch (DuplicateRecipeException exception) {
+                    JOptionPane.showMessageDialog(null, "Recipe already exists",
+                            "System Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
             }
+        }
+    }
+
+    public void finishRecipe(Recipe r) {
+        String prepTimeEntered = JOptionPane.showInputDialog(null,
+                "How many minutes does this recipe take to make?",
+                "New Recipe",
+                JOptionPane.QUESTION_MESSAGE);
+        try {
+            int prepTime = Integer.parseInt(prepTimeEntered);
+            r.changePrepTime(prepTime);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Not a valid time!",
+                    "System Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
