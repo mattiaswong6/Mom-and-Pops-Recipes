@@ -1,5 +1,6 @@
 package model;
 
+import model.exception.DuplicateRecipeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,7 +39,12 @@ class RecipeListTest {
 
     @Test
     void testAddRecipe() {
-        assertTrue(testRecipeList.addRecipe(r1));
+        try {
+            testRecipeList.addRecipe(r1);
+        } catch (DuplicateRecipeException e) {
+            fail();
+        }
+
         List<Recipe> recipes = testRecipeList.getRecipes();
         assertEquals(1, recipes.size());
         assertEquals(r1, recipes.get(0));
@@ -46,9 +52,13 @@ class RecipeListTest {
 
     @Test
     void testAddMultipleRecipes() {
-        assertTrue(testRecipeList.addRecipe(r1));
-        assertTrue(testRecipeList.addRecipe(r2));
-        assertTrue(testRecipeList.addRecipe(r3));
+        try {
+            testRecipeList.addRecipe(r1);
+            testRecipeList.addRecipe(r2);
+            testRecipeList.addRecipe(r3);
+        } catch (DuplicateRecipeException e) {
+            fail();
+        }
         List<Recipe> recipes = testRecipeList.getRecipes();
         assertEquals(3, recipes.size());
         assertEquals(r1, recipes.get(0));
@@ -58,8 +68,17 @@ class RecipeListTest {
 
     @Test
     void testAddDuplicateRecipes() {
-        assertTrue(testRecipeList.addRecipe(r1));
-        assertFalse(testRecipeList.addRecipe(r1));
+        try {
+            testRecipeList.addRecipe(r1);
+        } catch (DuplicateRecipeException e) {
+            fail();
+        }
+        try {
+            testRecipeList.addRecipe(r1);
+            fail();
+        } catch (DuplicateRecipeException e) {
+            // expected
+        }
         List<Recipe> recipes = testRecipeList.getRecipes();
         assertEquals(1, recipes.size());
         assertEquals(r1, recipes.get(0));
@@ -67,9 +86,13 @@ class RecipeListTest {
 
     @Test
     void testRemoveRecipe() {
-        assertTrue(testRecipeList.addRecipe(r1));
-        assertTrue(testRecipeList.addRecipe(r2));
-        assertTrue(testRecipeList.addRecipe(r3));
+        try {
+            testRecipeList.addRecipe(r1);
+            testRecipeList.addRecipe(r2);
+            testRecipeList.addRecipe(r3);
+        } catch (DuplicateRecipeException e) {
+            fail();
+        }
         assertTrue(testRecipeList.deleteRecipe(r1));
         List<Recipe> recipes = testRecipeList.getRecipes();
         assertEquals(2, recipes.size());
@@ -79,8 +102,12 @@ class RecipeListTest {
 
     @Test
     void testRemoveNonExistRecipe() {
-        assertTrue(testRecipeList.addRecipe(r1));
-        assertTrue(testRecipeList.addRecipe(r2));
+        try {
+            testRecipeList.addRecipe(r1);
+            testRecipeList.addRecipe(r2);
+        } catch (DuplicateRecipeException e) {
+            fail();
+        }
         assertFalse(testRecipeList.deleteRecipe(r3));
         List<Recipe> recipes = testRecipeList.getRecipes();
         assertEquals(2, recipes.size());
@@ -101,9 +128,13 @@ class RecipeListTest {
         assertTrue(r3.addIngredientToRecipe(i3));
         assertTrue(r3.addIngredientToRecipe(i4));
 
-        assertTrue(testRecipeList.addRecipe(r1));
-        assertTrue(testRecipeList.addRecipe(r2));
-        assertTrue(testRecipeList.addRecipe(r3));
+        try {
+            testRecipeList.addRecipe(r1);
+            testRecipeList.addRecipe(r2);
+            testRecipeList.addRecipe(r3);
+        } catch (DuplicateRecipeException e) {
+            fail();
+        }
 
         List<Ingredient> allIngredients = testRecipeList.getAllIngredients();
         assertEquals(4, allIngredients.size());

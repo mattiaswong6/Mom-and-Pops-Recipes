@@ -1,5 +1,6 @@
 package model;
 
+import model.exception.DuplicateRecipeException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -20,15 +21,14 @@ public class RecipeList implements Writable {
     // MODIFIES: this
     // EFFECTS: if recipe not already added, return true and add the given recipe to the recipe book,
     // else return false.
-    public boolean addRecipe(Recipe r) {
+    public void addRecipe(Recipe r) throws DuplicateRecipeException {
         for (Recipe recipe : this.recipes) {
             if (r.getRecipeName().equalsIgnoreCase(recipe.getRecipeName())) {
-                return false;
+                throw new DuplicateRecipeException(r);
             }
         }
 
         this.recipes.add(r);
-        return true;
     }
 
     // MODIFIES: this

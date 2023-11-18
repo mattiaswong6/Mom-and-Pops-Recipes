@@ -47,7 +47,7 @@ public class HomeTab extends Tab {
     private class ViewRecipesAction extends AbstractAction {
 
         ViewRecipesAction() {
-            super("View Recipes");
+            super(ButtonNames.VIEW_RECIPES.getValue());
         }
 
         @Override
@@ -66,7 +66,7 @@ public class HomeTab extends Tab {
     private class SaveAction extends AbstractAction {
 
         SaveAction() {
-            super("Save Recipes");
+            super(ButtonNames.SAVE.getValue());
         }
 
         @Override
@@ -87,7 +87,7 @@ public class HomeTab extends Tab {
     private class LoadAction extends AbstractAction {
 
         LoadAction() {
-            super("Load Recipes");
+            super(ButtonNames.LOAD.getValue());
         }
 
         @Override
@@ -108,7 +108,7 @@ public class HomeTab extends Tab {
     private class QuitAction extends AbstractAction {
 
         QuitAction() {
-            super("Quit");
+            super(ButtonNames.QUIT.getValue());
         }
 
         @Override
@@ -129,40 +129,3 @@ public class HomeTab extends Tab {
     }
 
 }
-
-//    // EFFECTS: creates View Recipes button that switches to Recipes Tab
-//    private void placeViewRecipesButton() {
-//        JButton viewRecipesButton = new JButton(ButtonNames.VIEW_RECIPES.getValue());
-//
-//        JPanel recipesBlock = new JPanel();
-//        recipesBlock.add(formatButtonRow(viewRecipesButton));
-//
-//        viewRecipesButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String buttonPressed = e.getActionCommand();
-//                if (buttonPressed.equals(ButtonNames.VIEW_RECIPES.getValue())) {
-//                    getController().getTabbedPane().setSelectedIndex(RecipeAppUI.RECIPES_TAB_INDEX);
-//                }
-//            }
-//        });
-//
-//        this.add(recipesBlock);
-//    }
-
-//    private void placeSaveButton() {
-//        JButton saveButton = new JButton(new SaveAction());
-//        JPanel saveBlock = new JPanel();
-//        saveBlock.add(formatButtonRow(saveButton));
-//
-//        saveButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                String buttonPressed = e.getActionCommand();
-//                if (buttonPressed.equals(ButtonNames.VIEW_RECIPES.getValue())) {
-//                    getController().getTabbedPane().setSelectedIndex(RecipeAppUI.RECIPES_TAB_INDEX);
-//                }
-//            }
-//        });
-//    }
-

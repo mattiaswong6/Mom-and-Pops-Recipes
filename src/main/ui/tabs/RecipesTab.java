@@ -1,5 +1,6 @@
 package ui.tabs;
 
+import model.Recipe;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
 
@@ -26,14 +27,13 @@ public class RecipesTab extends Tab {
 
         add(new JScrollPane(list));
         list.add(new JButton(new AddRecipeAction()));
-
     }
 
     // Adds a recipe to the recipe list with a given prep time and set of ingredients
     private class AddRecipeAction extends AbstractAction {
 
         AddRecipeAction() {
-            super("Add Recipe");
+            super(ButtonNames.ADD.getValue());
         }
 
         @Override
