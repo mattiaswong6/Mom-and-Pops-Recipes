@@ -57,8 +57,10 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         this.add(buttonPanel, BorderLayout.PAGE_END);
     }
 
-    public void loadRecipes(RecipeList rl) {
-
+    public void loadRecipesIntoScroll() {
+        for (Recipe r : getController().getRecipeList().getRecipes()) {
+            listModel.addElement(r.getRecipeName());
+        }
     }
 
     @Override
@@ -194,17 +196,21 @@ public class RecipesTab extends Tab implements ListSelectionListener {
     }
 
     public void givePrepTime(Recipe r) {
-        String prepTimeEntered = JOptionPane.showInputDialog(null,
-                "How many minutes does this recipe take to make?",
-                "New Recipe",
-                JOptionPane.QUESTION_MESSAGE);
-        try {
-            int prepTime = Integer.parseInt(prepTimeEntered);
-            r.changePrepTime(prepTime);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Not a valid time!",
-                    "System Error",
-                    JOptionPane.ERROR_MESSAGE);
+        boolean keepGoing = true;
+        while (keepGoing) {
+            String prepTimeEntered = JOptionPane.showInputDialog(null,
+                    "How many minutes does this recipe take to make?",
+                    "New Recipe",
+                    JOptionPane.QUESTION_MESSAGE);
+            try {
+                int prepTime = Integer.parseInt(prepTimeEntered);
+                r.changePrepTime(prepTime);
+                keepGoing = false;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Not a valid time!",
+                        "System Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
 
         addIngredients(r);

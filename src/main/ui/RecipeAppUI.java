@@ -25,6 +25,8 @@ public class RecipeAppUI extends JFrame {
     private JsonReader jsonReader;
 
     private JTabbedPane topbar;
+    private JPanel recipeTab;
+    private JPanel homeTab;
 
 
 
@@ -41,6 +43,9 @@ public class RecipeAppUI extends JFrame {
 
         topbar = new JTabbedPane();
         topbar.setTabPlacement(JTabbedPane.TOP);
+        recipeTab = new RecipesTab(this);
+        homeTab = new HomeTab(this);
+
 
         loadTabs();
         add(topbar);
@@ -48,21 +53,17 @@ public class RecipeAppUI extends JFrame {
         setVisible(true);
     }
 
-//    public JPanel getRecipeTab() {
-//        return this.recipeTab;
-//    }
-
     // MODIFIES: this
     // EFFECTS: adds home tab and recipes tab to this UI
     private void loadTabs() {
-        JPanel homeTab = new HomeTab(this);
-        JPanel recipeTab = new RecipesTab(this);
-
         topbar.add(homeTab, HOME_TAB_INDEX);
         topbar.setTitleAt(HOME_TAB_INDEX, "Home");
         topbar.add(recipeTab, RECIPES_TAB_INDEX);
         topbar.setTitleAt(RECIPES_TAB_INDEX, "Recipes");
+    }
 
+    public JPanel getRecipeTab() {
+        return this.recipeTab;
     }
 
     //EFFECTS: returns sidebar of this UI
@@ -78,10 +79,8 @@ public class RecipeAppUI extends JFrame {
             jsonWriter.write(recipeList);
             jsonWriter.close();
             returnMessage = "Recipe List successfully saved!";
-//            System.out.println("Saved " + recipeList.getName() + " to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             returnMessage = "Unable to save!";
-//            System.out.println("Unable to write to file: " + JSON_STORE);
         }
         return returnMessage;
     }
@@ -96,6 +95,8 @@ public class RecipeAppUI extends JFrame {
         } catch (IOException e) {
             returnMessage = "Unable to read from file: " + JSON_STORE;
         }
+        ((RecipesTab)this.recipeTab).loadRecipesIntoScroll();
+
         return returnMessage;
     }
 
