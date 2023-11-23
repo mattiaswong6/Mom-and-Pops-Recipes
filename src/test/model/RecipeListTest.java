@@ -140,4 +140,17 @@ class RecipeListTest {
         assertEquals(4, allIngredients.size());
     }
 
+    @Test
+    void testRecipeAt() {
+        try {
+            testRecipeList.addRecipe(r1);
+            testRecipeList.addRecipe(r2);
+        } catch (DuplicateRecipeException e) {
+            fail();
+        }
+
+        assertEquals(r1, testRecipeList.getRecipeAt(0));
+        assertEquals(r2, testRecipeList.getRecipeAt(1));
+    }
+
 }
