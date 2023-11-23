@@ -2,31 +2,164 @@ package ui.tabs;
 
 import model.Ingredient;
 import model.Recipe;
+import model.RecipeList;
 import model.exception.DuplicateRecipeException;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class RecipesTab extends Tab {
-    private JPanel list;
+public class RecipesTab extends Tab implements ListSelectionListener {
+    private JList list;
+    private DefaultListModel listModel;
+    private JButton addRecipeButton;
+    private JButton deleteRecipeButton;
+    private JButton viewRecipeButton;
 
     //EFFECTS: constructs a recipes tab for console with scroll pane of recipes
     public RecipesTab(RecipeAppUI controller) {
         super(controller);
         setLayout(new BorderLayout());
 
-        list = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        list.add(new JPanel(), gbc);
+        listModel = new DefaultListModel();
 
-        add(new JScrollPane(list));
-        list.add(new JButton(new AddRecipeAction()));
+        list = new JList(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        list.setSelectedIndex(-1);
+        list.addListSelectionListener(this);
+        list.setVisibleRowCount(5);
+        JScrollPane listScrollPane = new JScrollPane(list);
+        this.add(listScrollPane, BorderLayout.CENTER);
+
+        addRecipeButton = new JButton(new RecipesTab.AddRecipeAction());
+        deleteRecipeButton = new JButton(new RecipesTab.DeleteRecipeAction());
+        viewRecipeButton = new JButton(new RecipesTab.ViewRecipeAction());
+        deleteRecipeButton.setEnabled(false);
+        viewRecipeButton.setEnabled(false);
+
+        addButtonPanel();
+
+    }
+
+    private void addButtonPanel() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(4, 2));
+        buttonPanel.add(addRecipeButton);
+        buttonPanel.add(deleteRecipeButton);
+        buttonPanel.add(viewRecipeButton);
+
+        this.add(buttonPanel, BorderLayout.PAGE_END);
+    }
+
+    public void loadRecipes(RecipeList rl) {
+
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        if (e.getValueIsAdjusting() == false) {
+
+            if (list.getSelectedIndex() == -1) {
+                //No selection, disable delete and view recipe buttons.
+                deleteRecipeButton.setEnabled(false);
+                viewRecipeButton.setEnabled(false);
+
+            } else {
+                //Selection, enable the delete and view recipe buttons.
+                deleteRecipeButton.setEnabled(true);
+                viewRecipeButton.setEnabled(true);
+            }
+        }
+    }
+
+    private class ViewRecipeAction extends AbstractAction implements ActionListener {
+        ViewRecipeAction() {
+            super(ButtonNames.VIEW.getValue());
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String buttonPressed = e.getActionCommand();
+            if (buttonPressed.equals(ButtonNames.VIEW.getValue())) {
+                int index = list.getSelectedIndex();
+                Recipe selectedRecipe = getController().getRecipeList().getRecipeAt(index);
+
+                Object[] options = {"Ok, go back",
+                        "Delete Recipe"};
+                int reply = JOptionPane.showOptionDialog(null,
+                        listIngredients(selectedRecipe), selectedRecipe.getRecipeName(), JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+                if (reply == JOptionPane.NO_OPTION) {
+                    getController().getRecipeList().deleteRecipe(selectedRecipe);
+                    listModel.remove(index);
+                    JOptionPane.showMessageDialog(null,
+                            selectedRecipe.getRecipeIngredients() + "deleted!",
+                            "Delete Message", JOptionPane.PLAIN_MESSAGE);
+                }
+            }
+        }
+    }
+
+
+    private String listIngredients(Recipe r) {
+        String enter = "\n";
+        String tab = "\t";
+        String bigTab = "\t\t\t\t\t\t";
+        String returnedIngredients = "~~~ Recipe for " + r.getRecipeName() + " ~~~" + enter + enter + tab
+                + "Prep time: " + r.getPrepTime() + " minutes" + enter + enter + tab + "Ingredients:" + enter;
+
+        for (Ingredient i : r.getRecipeIngredients()) {
+            returnedIngredients = returnedIngredients + bigTab + "- " + i.getIngredientName() + enter;
+        }
+        return returnedIngredients;
+    }
+
+
+
+    private class DeleteRecipeAction extends AbstractAction {
+        DeleteRecipeAction() {
+            super(ButtonNames.DELETE.getValue());
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String buttonPressed = e.getActionCommand();
+            if (buttonPressed.equals(ButtonNames.DELETE.getValue())) {
+                int reply = JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to delete this recipe?",
+                        "Delete Window",
+                        JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    int index = list.getSelectedIndex();
+                    Recipe selectedRecipe = getController().getRecipeList().getRecipeAt(index);
+                    getController().getRecipeList().deleteRecipe(selectedRecipe);
+                    listModel.remove(index);
+
+                    int size = listModel.getSize();
+
+                    if (size == 0) { //Nobody's left, disable firing.
+                        deleteRecipeButton.setEnabled(false);
+
+                    } else { //Select an index.
+                        if (index == listModel.getSize()) {
+                            //removed item in last position
+                            index--;
+                        }
+
+                        list.setSelectedIndex(index);
+                        list.ensureIndexIsVisible(index);
+                    }
+
+                }
+            }
+        }
     }
 
     // Adds a recipe to the recipe list with a given prep time and set of ingredients
@@ -81,8 +214,7 @@ public class RecipesTab extends Tab {
         boolean keepAdding = true;
         while (keepAdding) {
             String ingredientEntered = JOptionPane.showInputDialog(null,
-                    "Enter the ingredient you want to add",
-                    "Add Ingredient",
+                    "Enter the ingredient you want to add", "Add Ingredient",
                     JOptionPane.QUESTION_MESSAGE);
             Ingredient i = new Ingredient(ingredientEntered);
             if (!r.addIngredientToRecipe(i)) {
@@ -103,6 +235,7 @@ public class RecipesTab extends Tab {
                 keepAdding = false;
             }
         }
+        listModel.addElement(r.getRecipeName());
     }
 
     public void showDuplicateError() {

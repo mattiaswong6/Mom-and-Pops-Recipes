@@ -5,7 +5,9 @@ public enum ButtonNames {
     SAVE("Save Recipes"),
     LOAD("Load Recipes"),
     QUIT("Quit"),
-    ADD("Add New Recipe");
+    ADD("Add New Recipe"),
+    DELETE("Delete Recipe"),
+    VIEW("View Recipe");
 
     private final String name;
 

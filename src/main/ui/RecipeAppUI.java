@@ -48,6 +48,10 @@ public class RecipeAppUI extends JFrame {
         setVisible(true);
     }
 
+//    public JPanel getRecipeTab() {
+//        return this.recipeTab;
+//    }
+
     // MODIFIES: this
     // EFFECTS: adds home tab and recipes tab to this UI
     private void loadTabs() {
@@ -93,6 +97,10 @@ public class RecipeAppUI extends JFrame {
             returnMessage = "Unable to read from file: " + JSON_STORE;
         }
         return returnMessage;
+    }
+
+    public JsonReader getJsonReader() {
+        return jsonReader;
     }
 
     public RecipeList getRecipeList() {
