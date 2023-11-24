@@ -2,12 +2,9 @@ package ui.tabs;
 
 import javax.swing.*;
 
-import model.Recipe;
 import ui.RecipeAppUI;
 
 import java.awt.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionListener;
 
 
 public abstract class Tab extends JPanel {

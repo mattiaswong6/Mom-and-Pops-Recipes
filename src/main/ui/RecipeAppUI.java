@@ -1,6 +1,5 @@
 package ui;
 
-import model.Recipe;
 import model.RecipeList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -61,10 +60,6 @@ public class RecipeAppUI extends JFrame {
         topbar.setTitleAt(RECIPES_TAB_INDEX, "Recipes");
     }
 
-    public JPanel getRecipeTab() {
-        return this.recipeTab;
-    }
-
     //EFFECTS: returns sidebar of this UI
     public JTabbedPane getTabbedPane() {
         return topbar;
@@ -99,14 +94,8 @@ public class RecipeAppUI extends JFrame {
         return returnMessage;
     }
 
-    public JsonReader getJsonReader() {
-        return jsonReader;
-    }
-
     public RecipeList getRecipeList() {
         return this.recipeList;
     }
-
-
 
 }
