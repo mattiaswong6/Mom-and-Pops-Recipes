@@ -7,25 +7,35 @@ import ui.RecipeAppUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 public class HomeTab extends Tab {
     private static final String INIT_GREETING = "Welcome to Mom and Pop's Recipes!";
     private JLabel greeting;
+    private GridBagConstraints constraints;
 
     //EFFECTS: constructs a home tab for console with buttons and a greeting
     public HomeTab(RecipeAppUI controller) {
         super(controller);
 
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridLayout(3,1));
 
+        placeGif();
         placeGreeting();
         addButtonPanel();
+    }
+
+    private void placeGif() {
+        Icon imgIconTwo = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("noodles.gif")));
+        JLabel labelTwo = new JLabel(imgIconTwo, JLabel.CENTER);
+        this.add(labelTwo);
     }
 
     //EFFECTS: creates greeting at top of console
     private void placeGreeting() {
         greeting = new JLabel(INIT_GREETING, JLabel.CENTER);
-        greeting.setSize(WIDTH, HEIGHT / 3);
+        greeting.setFont(new Font("Serif", Font.PLAIN, 40));
+//        greeting.setSize(WIDTH, HEIGHT / 3);
         this.add(greeting);
     }
 
