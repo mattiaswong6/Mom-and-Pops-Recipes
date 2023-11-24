@@ -10,11 +10,10 @@ import ui.tabs.*;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 public class RecipeAppUI extends JFrame {
-    public static final int WIDTH = 600;
-    public static final int HEIGHT = 400;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 800;
 
     public static final int HOME_TAB_INDEX = 0;
     public static final int RECIPES_TAB_INDEX = 1;

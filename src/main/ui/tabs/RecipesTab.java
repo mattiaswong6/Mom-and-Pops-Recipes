@@ -58,6 +58,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
     }
 
     public void loadRecipesIntoScroll() {
+        listModel.removeAllElements();
         for (Recipe r : getController().getRecipeList().getRecipes()) {
             listModel.addElement(r.getRecipeName());
         }
@@ -102,13 +103,12 @@ public class RecipesTab extends Tab implements ListSelectionListener {
                     getController().getRecipeList().deleteRecipe(selectedRecipe);
                     listModel.remove(index);
                     JOptionPane.showMessageDialog(null,
-                            selectedRecipe.getRecipeIngredients() + "deleted!",
+                            "Recipe for " + selectedRecipe.getRecipeName() + " deleted!",
                             "Delete Message", JOptionPane.PLAIN_MESSAGE);
                 }
             }
         }
     }
-
 
     private String listIngredients(Recipe r) {
         String enter = "\n";
@@ -122,7 +122,6 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         }
         return returnedIngredients;
     }
-
 
 
     private class DeleteRecipeAction extends AbstractAction {
@@ -195,13 +194,17 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         }
     }
 
-    public void givePrepTime(Recipe r) {
+    private void givePrepTime(Recipe r) {
         boolean keepGoing = true;
         while (keepGoing) {
             String prepTimeEntered = JOptionPane.showInputDialog(null,
                     "How many minutes does this recipe take to make?",
                     "New Recipe",
                     JOptionPane.QUESTION_MESSAGE);
+            if (prepTimeEntered == null) {
+                getController().getRecipeList().deleteRecipe(r);
+                return;
+            }
             try {
                 int prepTime = Integer.parseInt(prepTimeEntered);
                 r.changePrepTime(prepTime);
@@ -216,35 +219,41 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         addIngredients(r);
     }
 
-    public void addIngredients(Recipe r) {
+    private void addIngredients(Recipe r) {
         boolean keepAdding = true;
         while (keepAdding) {
             String ingredientEntered = JOptionPane.showInputDialog(null,
                     "Enter the ingredient you want to add", "Add Ingredient",
                     JOptionPane.QUESTION_MESSAGE);
             Ingredient i = new Ingredient(ingredientEntered);
-            if (!r.addIngredientToRecipe(i)) {
+            if (ingredientEntered != null && !r.addIngredientToRecipe(i)) {
                 showDuplicateError();
             }
-
-            Object[] options = {"Add another ingredient",
-                    "Finish recipe"};
-            int reply = JOptionPane.showOptionDialog(null,
-                    "Would you like to add another ingredient or finish recipe?",
-                    "Add to or Save Recipe", JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-
-            if (reply == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(null,
-                        "Recipe for " + r.getRecipeName() + " successfully added!",
-                        "Load Status", JOptionPane.PLAIN_MESSAGE);
-                keepAdding = false;
-            }
+            keepAdding = addIngredientFinishRecipeLoop(r);
         }
         listModel.addElement(r.getRecipeName());
     }
 
-    public void showDuplicateError() {
+    public boolean addIngredientFinishRecipeLoop(Recipe r) {
+        boolean keepAdding = true;
+        Object[] options = {"Add another ingredient",
+                "Finish recipe"};
+        int reply = JOptionPane.showOptionDialog(null,
+                "Would you like to add another ingredient or finish recipe?",
+                "Add to or Save Recipe", JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        if (reply == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null,
+                    "Recipe for " + r.getRecipeName() + " successfully added!",
+                    "Load Status", JOptionPane.PLAIN_MESSAGE);
+            keepAdding = false;
+        }
+        return keepAdding;
+    }
+
+
+    private void showDuplicateError() {
         JOptionPane.showMessageDialog(null, "Ingredient already added!",
                 "Duplicate Ingredient Error",
                 JOptionPane.ERROR_MESSAGE);
