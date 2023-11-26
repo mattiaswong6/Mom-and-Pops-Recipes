@@ -133,4 +133,14 @@ Recipe List loaded
 
 Process finished with exit code 0
 
+## Phase 4: Task 3
+
+If I had more time to work on this project, I would refactor my methods so that they utilize more exceptions.
+Since exceptions were taught later in the semester, some of my methods produce false booleans instead of exceptions when
+an illegal action is attempted (ie. adding an ingredient to a recipe that already has that ingredient).
+To complete this refactoring, I would make the method addIngredientToRecipe(Ingredient i) produce void and throw
+an exception DuplicateIngredientException instead of returning false when the user tries to add an ingredient that has
+already been added. An exception would make more sense than a boolean
+because users only add the same ingredient twice by accident.
+
 
