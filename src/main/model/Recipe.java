@@ -20,6 +20,7 @@ public class Recipe implements Writable {
         this.name = recipeName;
         this.prepTime = time;
         this.recipeIngredients = new ArrayList<>();
+        EventLog.getInstance().logEvent(new Event("New recipe for " + name + " created"));
     }
 
     // MODIFIES: this
@@ -33,6 +34,8 @@ public class Recipe implements Writable {
         }
 
         this.recipeIngredients.add(i);
+        EventLog.getInstance().logEvent(new Event(i.getIngredientName() + " added to " + this.name
+                + " recipe"));
         return true;
 
     }
@@ -74,6 +77,8 @@ public class Recipe implements Writable {
     // EFFECTS: changes the prep time of the recipe to a new given time (in minutes)
     public void changePrepTime(int time) {
         this.prepTime = time;
+        EventLog.getInstance().logEvent(new Event("Prep time for " + this.name + " set to "
+                + Integer.toString(time) + " minutes"));
     }
 
 }

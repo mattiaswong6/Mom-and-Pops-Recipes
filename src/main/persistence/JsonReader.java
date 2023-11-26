@@ -6,9 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import model.Ingredient;
-import model.Recipe;
-import model.RecipeList;
+import model.*;
 import model.exception.DuplicateRecipeException;
 import org.json.*;
 
@@ -27,6 +25,7 @@ public class JsonReader {
     public RecipeList read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
+        EventLog.getInstance().logEvent(new Event("Recipe List loaded"));
         return parseRecipeList(jsonObject);
     }
 

@@ -29,6 +29,8 @@ public class RecipeList implements Writable {
         }
 
         this.recipes.add(r);
+        EventLog.getInstance().logEvent(new Event("Recipe for " + r.getRecipeName()
+                + " added to recipe list"));
     }
 
     // MODIFIES: this
@@ -38,6 +40,8 @@ public class RecipeList implements Writable {
         for (Recipe recipe : this.recipes) {
             if (r.getRecipeName().equalsIgnoreCase(recipe.getRecipeName())) {
                 this.recipes.remove(recipe);
+                EventLog.getInstance().logEvent(new Event("Recipe for " + r.getRecipeName()
+                        + " deleted from recipe list"));
                 return true;
             }
         }
@@ -64,6 +68,8 @@ public class RecipeList implements Writable {
     }
 
     public Recipe getRecipeAt(int index) {
+        EventLog.getInstance().logEvent(new Event("Recipe for " + this.recipes.get(index).getRecipeName()
+                + " viewed in detail"));
         return this.recipes.get(index);
     }
 

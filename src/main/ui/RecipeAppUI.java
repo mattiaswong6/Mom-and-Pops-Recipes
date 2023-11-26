@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.RecipeList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -7,10 +9,12 @@ import ui.tabs.*;
 
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class RecipeAppUI extends JFrame {
+public class RecipeAppUI extends JFrame implements WindowListener {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
 
@@ -44,11 +48,13 @@ public class RecipeAppUI extends JFrame {
         recipeTab = new RecipesTab(this);
         homeTab = new HomeTab(this);
 
+        addWindowListener(this);
 
         loadTabs();
         add(topbar);
 
         setVisible(true);
+
     }
 
     // MODIFIES: this
@@ -98,4 +104,46 @@ public class RecipeAppUI extends JFrame {
         return this.recipeList;
     }
 
+    public void printLog(EventLog el) {
+        String printed = "";
+        for (Event next : el) {
+            printed = printed + next.toString() + "\n\n";
+        }
+        System.out.println(printed);
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        printLog(EventLog.getInstance());
+        System.exit(0);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

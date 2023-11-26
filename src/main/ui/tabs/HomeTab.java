@@ -1,5 +1,6 @@
 package ui.tabs;
 
+import model.EventLog;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
 
@@ -7,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Objects;
+
+import static java.awt.event.WindowEvent.WINDOW_CLOSING;
 
 public class HomeTab extends Tab {
     private static final String INIT_GREETING = "Welcome to Mom and Pop's Recipes!";

@@ -98,3 +98,39 @@ Alternative Saving and Loading Using Quit:
 
 Visual Component:
 - A GIF can be found on the Home page.
+
+## Phase 4: Event Log sample
+
+Sun Nov 26 14:30:03 PST 2023
+New recipe for Spaghetti created
+
+Sun Nov 26 14:30:03 PST 2023
+Recipe for Spaghetti added to recipe list
+
+Sun Nov 26 14:30:04 PST 2023
+Prep time for Spaghetti set to 30 minutes
+
+Sun Nov 26 14:30:07 PST 2023
+Noodles added to Spaghetti recipe
+
+Sun Nov 26 14:30:10 PST 2023
+Tomato Sauce added to Spaghetti recipe
+
+Sun Nov 26 14:30:13 PST 2023
+Meatballs added to Spaghetti recipe
+
+Sun Nov 26 14:30:18 PST 2023
+Recipe for Spaghetti viewed in detail
+
+Sun Nov 26 14:30:26 PST 2023
+Recipe for Spaghetti deleted from recipe list
+
+Sun Nov 26 14:30:28 PST 2023
+Recipe List saved
+
+Sun Nov 26 14:30:29 PST 2023
+Recipe List loaded
+
+Process finished with exit code 0
+
+
