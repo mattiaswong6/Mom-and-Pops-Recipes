@@ -1,5 +1,6 @@
 package ui.tabs;
 
+import model.EventLog;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
 
@@ -124,8 +125,10 @@ public class HomeTab extends Tab {
                         "Quit Window", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
                     getController().saveRecipeList();
+                    getController().printLog(EventLog.getInstance());
                     System.exit(0);
                 } else if (reply == JOptionPane.NO_OPTION) {
+                    getController().printLog(EventLog.getInstance());
                     System.exit(0);
                 }
             }

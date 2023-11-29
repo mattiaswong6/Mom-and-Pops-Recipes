@@ -118,7 +118,8 @@ public class RecipeAppUI extends JFrame implements WindowListener {
         // do nothing
     }
 
-    // EFFECTS: prints the singular instance of Event Log to the console and ends the program
+    // EFFECTS: prints the singular instance of Event Log to the console and ends the program when default close
+    // operation for the window is used
     @Override
     public void windowClosing(WindowEvent e) {
         printLog(EventLog.getInstance());
