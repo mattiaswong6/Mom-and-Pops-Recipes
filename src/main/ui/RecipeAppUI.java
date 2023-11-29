@@ -104,6 +104,7 @@ public class RecipeAppUI extends JFrame implements WindowListener {
         return this.recipeList;
     }
 
+    // EFFECTS: prints all events of a given event log to the console
     public void printLog(EventLog el) {
         String printed = "";
         for (Event next : el) {
@@ -114,9 +115,10 @@ public class RecipeAppUI extends JFrame implements WindowListener {
 
     @Override
     public void windowOpened(WindowEvent e) {
-
+        // do nothing
     }
 
+    // EFFECTS: prints the singular instance of Event Log to the console and ends the program
     @Override
     public void windowClosing(WindowEvent e) {
         printLog(EventLog.getInstance());
@@ -125,25 +127,26 @@ public class RecipeAppUI extends JFrame implements WindowListener {
 
     @Override
     public void windowClosed(WindowEvent e) {
+        // do nothing
     }
 
     @Override
     public void windowIconified(WindowEvent e) {
-
+        // do nothing
     }
 
     @Override
     public void windowDeiconified(WindowEvent e) {
-
+        // do nothing
     }
 
     @Override
     public void windowActivated(WindowEvent e) {
-
+        // do nothing
     }
 
     @Override
     public void windowDeactivated(WindowEvent e) {
-
+        // do nothing
     }
 }

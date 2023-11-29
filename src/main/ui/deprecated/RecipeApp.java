@@ -1,4 +1,4 @@
-package ui;
+package ui.deprecated;
 
 import model.Ingredient;
 import model.Recipe;
