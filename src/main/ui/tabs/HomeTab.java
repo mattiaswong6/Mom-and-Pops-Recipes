@@ -1,6 +1,6 @@
 package ui.tabs;
 
-import model.RecipeList;
+import model.EventLog;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
 
@@ -12,9 +12,8 @@ import java.util.Objects;
 public class HomeTab extends Tab {
     private static final String INIT_GREETING = "Welcome to Mom and Pop's Recipes!";
     private JLabel greeting;
-    private GridBagConstraints constraints;
 
-    //EFFECTS: constructs a home tab for console with buttons and a greeting
+    //EFFECTS: constructs a home tab for console with buttons, a greeting, and a GIF
     public HomeTab(RecipeAppUI controller) {
         super(controller);
 
@@ -25,20 +24,24 @@ public class HomeTab extends Tab {
         addButtonPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: creates a GIF at the top of the panel
     private void placeGif() {
         Icon imgIconTwo = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("noodles.gif")));
         JLabel labelTwo = new JLabel(imgIconTwo, JLabel.CENTER);
         this.add(labelTwo);
     }
 
-    //EFFECTS: creates greeting at top of console
+    //MODIFIES: this
+    //EFFECTS: creates greeting in the middle of the panel
     private void placeGreeting() {
         greeting = new JLabel(INIT_GREETING, JLabel.CENTER);
         greeting.setFont(new Font("Serif", Font.PLAIN, 40));
-//        greeting.setSize(WIDTH, HEIGHT / 3);
         this.add(greeting);
     }
 
+    //MODIFIES: this
+    //EFFECTS: creates View Recipes, Save, Load, Quit buttons at bottom of the panel
     private void addButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(4,2));
@@ -51,10 +54,8 @@ public class HomeTab extends Tab {
     }
 
 
-    /**
-     * Represents the action to be taken when the user wants to view all recipes.
-     * Switches user to Recipes Tab.
-     */
+
+//     EFFECTS: Switches user to Recipes tab
     private class ViewRecipesAction extends AbstractAction {
 
         ViewRecipesAction() {
@@ -70,10 +71,8 @@ public class HomeTab extends Tab {
         }
     }
 
-    /**
-     * Represents the action to be taken when the user wants to save their recipes.
-     *
-     */
+
+    //EFFECTS: saves the current recipe list to recipeList.json
     private class SaveAction extends AbstractAction {
 
         SaveAction() {
@@ -91,10 +90,8 @@ public class HomeTab extends Tab {
         }
     }
 
-    /**
-     * Represents the action to be taken when the user wants to load their saved recipes.
-     *
-     */
+
+    //EFFECTS: loads the recipe list in recipeList.json
     private class LoadAction extends AbstractAction {
 
         LoadAction() {
@@ -112,10 +109,7 @@ public class HomeTab extends Tab {
         }
     }
 
-    /**
-     * Represents the action to be taken when the user wants to quit the app.
-     *
-     */
+    //EFFECTS: prompts user to save or not save before quitting the app
     private class QuitAction extends AbstractAction {
 
         QuitAction() {
@@ -130,9 +124,11 @@ public class HomeTab extends Tab {
                         "Would you like to save before quitting?",
                         "Quit Window", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
-                    String returnedMessage = getController().saveRecipeList();
+                    getController().saveRecipeList();
+                    getController().printLog(EventLog.getInstance());
                     System.exit(0);
                 } else if (reply == JOptionPane.NO_OPTION) {
+                    getController().printLog(EventLog.getInstance());
                     System.exit(0);
                 }
             }

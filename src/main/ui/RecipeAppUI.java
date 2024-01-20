@@ -1,6 +1,7 @@
 package ui;
 
-import model.Recipe;
+import model.Event;
+import model.EventLog;
 import model.RecipeList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -8,10 +9,12 @@ import ui.tabs.*;
 
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-public class RecipeAppUI extends JFrame {
+public class RecipeAppUI extends JFrame implements WindowListener {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
 
@@ -45,11 +48,13 @@ public class RecipeAppUI extends JFrame {
         recipeTab = new RecipesTab(this);
         homeTab = new HomeTab(this);
 
+        addWindowListener(this);
 
         loadTabs();
         add(topbar);
 
         setVisible(true);
+
     }
 
     // MODIFIES: this
@@ -59,10 +64,6 @@ public class RecipeAppUI extends JFrame {
         topbar.setTitleAt(HOME_TAB_INDEX, "Home");
         topbar.add(recipeTab, RECIPES_TAB_INDEX);
         topbar.setTitleAt(RECIPES_TAB_INDEX, "Recipes");
-    }
-
-    public JPanel getRecipeTab() {
-        return this.recipeTab;
     }
 
     //EFFECTS: returns sidebar of this UI
@@ -99,14 +100,54 @@ public class RecipeAppUI extends JFrame {
         return returnMessage;
     }
 
-    public JsonReader getJsonReader() {
-        return jsonReader;
-    }
-
     public RecipeList getRecipeList() {
         return this.recipeList;
     }
 
+    // EFFECTS: prints all events of a given event log to the console
+    public void printLog(EventLog el) {
+        String printed = "";
+        for (Event next : el) {
+            printed = printed + next.toString() + "\n\n";
+        }
+        System.out.println(printed);
+    }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+        // do nothing
+    }
 
+    // EFFECTS: prints the singular instance of Event Log to the console and ends the program when default close
+    // operation for the window is used
+    @Override
+    public void windowClosing(WindowEvent e) {
+        printLog(EventLog.getInstance());
+        System.exit(0);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        // do nothing
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+        // do nothing
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        // do nothing
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        // do nothing
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        // do nothing
+    }
 }

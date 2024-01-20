@@ -2,7 +2,6 @@ package ui.tabs;
 
 import model.Ingredient;
 import model.Recipe;
-import model.RecipeList;
 import model.exception.DuplicateRecipeException;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
@@ -13,7 +12,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class RecipesTab extends Tab implements ListSelectionListener {
     private JList list;
@@ -22,7 +20,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
     private JButton deleteRecipeButton;
     private JButton viewRecipeButton;
 
-    //EFFECTS: constructs a recipes tab for console with scroll pane of recipes
+    //EFFECTS: constructs a recipes tab for console with scroll pane of recipes and Add, Delete, View Recipe buttons
     public RecipesTab(RecipeAppUI controller) {
         super(controller);
         setLayout(new BorderLayout());
@@ -47,6 +45,8 @@ public class RecipesTab extends Tab implements ListSelectionListener {
 
     }
 
+    //MODIFIES: this
+    //EFFECTS: adds the Add, Delete, View Recipes buttons to the panel.
     private void addButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(4, 2));
@@ -57,6 +57,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         this.add(buttonPanel, BorderLayout.PAGE_END);
     }
 
+    //EFFECTS: loads all recipes in the current recipe list into the scroll panel
     public void loadRecipesIntoScroll() {
         listModel.removeAllElements();
         for (Recipe r : getController().getRecipeList().getRecipes()) {
@@ -64,6 +65,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         }
     }
 
+    //EFFECTS: disables the delete and view recipe buttons when a recipe is not selected
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
@@ -81,6 +83,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         }
     }
 
+    //EFFECTS: shows user a pop-up window containing a recipes ingredients and prep time
     private class ViewRecipeAction extends AbstractAction implements ActionListener {
         ViewRecipeAction() {
             super(ButtonNames.VIEW.getValue());
@@ -110,6 +113,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         }
     }
 
+    //EFFECTS: produces a string containing a given recipe's name, prep time, and list of ingredients
     private String listIngredients(Recipe r) {
         String enter = "\n";
         String tab = "\t";
@@ -123,7 +127,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         return returnedIngredients;
     }
 
-
+    //EFFECTS: allows user to confirm their deletion then deletes a selected recipe from the recipe list
     private class DeleteRecipeAction extends AbstractAction {
         DeleteRecipeAction() {
             super(ButtonNames.DELETE.getValue());
@@ -163,7 +167,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         }
     }
 
-    // Adds a recipe to the recipe list with a given prep time and set of ingredients
+    // EFFECTS: Adds a recipe to the recipe list with a given name
     private class AddRecipeAction extends AbstractAction {
 
         AddRecipeAction() {
@@ -194,6 +198,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         }
     }
 
+    //EFFECTS: Allows user to add a prep time to a given recipe
     private void givePrepTime(Recipe r) {
         boolean keepGoing = true;
         while (keepGoing) {
@@ -219,6 +224,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         addIngredients(r);
     }
 
+    //EFFECTS: Allows user to enter a list of ingredients to a given recipe
     private void addIngredients(Recipe r) {
         boolean keepAdding = true;
         while (keepAdding) {
@@ -234,7 +240,8 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         listModel.addElement(r.getRecipeName());
     }
 
-    public boolean addIngredientFinishRecipeLoop(Recipe r) {
+    //EFFECTS: Allows user to decide whether to finish a given recipe or add another ingredient to a given recipe
+    private boolean addIngredientFinishRecipeLoop(Recipe r) {
         boolean keepAdding = true;
         Object[] options = {"Add another ingredient",
                 "Finish recipe"};
@@ -252,7 +259,7 @@ public class RecipesTab extends Tab implements ListSelectionListener {
         return keepAdding;
     }
 
-
+    //EFFECTS: shows an error pop-up telling user that "Ingredient already added!"
     private void showDuplicateError() {
         JOptionPane.showMessageDialog(null, "Ingredient already added!",
                 "Duplicate Ingredient Error",
