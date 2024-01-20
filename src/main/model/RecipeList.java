@@ -63,6 +63,10 @@ public class RecipeList implements Writable {
         return allIngredients;
     }
 
+    public Recipe getRecipeAt(int index) {
+        return this.recipes.get(index);
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

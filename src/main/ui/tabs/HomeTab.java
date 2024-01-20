@@ -1,5 +1,6 @@
 package ui.tabs;
 
+import model.RecipeList;
 import ui.ButtonNames;
 import ui.RecipeAppUI;
 
@@ -95,6 +96,7 @@ public class HomeTab extends Tab {
             String buttonPressed = e.getActionCommand();
             if (buttonPressed.equals(ButtonNames.LOAD.getValue())) {
                 String returnedMessage = getController().loadRecipeList();
+//                RecipeList rl = getController().getRecipeList();
                 JOptionPane.showMessageDialog(null, returnedMessage,
                         "Load Status", JOptionPane.PLAIN_MESSAGE);
             }
