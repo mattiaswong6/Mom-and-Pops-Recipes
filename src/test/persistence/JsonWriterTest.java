@@ -3,6 +3,7 @@ package persistence;
 import model.Ingredient;
 import model.Recipe;
 import model.RecipeList;
+import model.exception.DuplicateRecipeException;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -56,13 +57,21 @@ public class JsonWriterTest extends JsonTest {
             r1.addIngredientToRecipe(i1);
             r1.addIngredientToRecipe(i2);
             r1.addIngredientToRecipe(i3);
-            rl.addRecipe(r1);
+            try {
+                rl.addRecipe(r1);
+            } catch (DuplicateRecipeException e) {
+                fail();
+            }
 
             Recipe r2 = new Recipe("Steak", 20);
             Ingredient i4 = new Ingredient("beef");
             r2.addIngredientToRecipe(i4);
             r2.addIngredientToRecipe(i1);
-            rl.addRecipe(r2);
+            try {
+                rl.addRecipe(r2);
+            } catch (DuplicateRecipeException e) {
+                fail();
+            }
 
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralRecipeList.json");
             writer.open();

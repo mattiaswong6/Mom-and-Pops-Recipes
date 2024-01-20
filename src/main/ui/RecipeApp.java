@@ -3,6 +3,7 @@ package ui;
 import model.Ingredient;
 import model.Recipe;
 import model.RecipeList;
+import model.exception.DuplicateRecipeException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -159,14 +160,15 @@ public class RecipeApp {
         int time = Integer.parseInt(timeString);
         Recipe r = new Recipe(name, time);
 
-        if (recipeList.addRecipe(r)) {
+        try {
+            recipeList.addRecipe(r);
             System.out.println("New recipe " + name + " (" + time + " mins) created.");
             keepAddingIngredients(r);
-
             System.out.println("Recipe for " + name + " finished and added to recipe book!");
-        } else {
+        } catch (DuplicateRecipeException e) {
             System.out.println("Sorry, recipe for " + name + " already exists.");
         }
+
     }
 
     // MODIFIES: r

@@ -60,4 +60,10 @@ public class RecipeTest {
         assertEquals(i2, ingredientsNeeded.get(1));
     }
 
+    @Test
+    void testChangePrepTime() {
+        testRecipe.changePrepTime(2);
+        assertEquals(testRecipe.getPrepTime(), 2);
+    }
+
 }

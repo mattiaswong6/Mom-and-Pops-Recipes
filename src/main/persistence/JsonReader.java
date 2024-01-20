@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 import model.Ingredient;
 import model.Recipe;
 import model.RecipeList;
+import model.exception.DuplicateRecipeException;
 import org.json.*;
 
 // Represents a reader that reads recipe list from JSON data stored in file
@@ -70,7 +71,11 @@ public class JsonReader {
             addIngredient(recipe, nextIngredient);
         }
 
-        rl.addRecipe(recipe);
+        try {
+            rl.addRecipe(recipe);
+        } catch (DuplicateRecipeException e) {
+            // nothing
+        }
     }
 
     // MODIFIES: r
