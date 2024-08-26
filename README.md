@@ -1,6 +1,6 @@
-# My Personal Project: "Mom & Pop's"
+# Mom & Pop's Recipe Manager
 
-## What is "Mom & Pop's"?
+## What is it?
 
 Mom & Pop's is a multi-functional recipe and ingredient manager that allows people to
 consolidate all of their recipes in one place. This app seeks to answer the question
