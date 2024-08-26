@@ -29,26 +29,7 @@ realize that it is
 difficult to manage an inventory of food and keep track of when food expires. **After experiencing
 these problems, I am interested in creating an app that may solve them.**
 
-## User Stories
-
-- As a user, I want to be able to create a new recipe with a name, specified ingredients and preparation time,
-and add it to a list of recipes.
-- As a user, I want to be able to view a list of the titles of the recipes in my collection.
-- As a user, I want to be able to delete a recipe from my collection.
-- As a user, I want to be able to select a recipe in my collection and view the recipe in detail.
-
-- As a user, when I select the quit option from the application menu, I want to be reminded to save my recipe book
-to file and have the option to do so or not.
-- As a user, I want to be given the option to load my recipe book from file.
-
-User stories not implemented yet (for future use):
-- As a user, I want to be able to add ingredients to a list of ingredients (ie. a virtual pantry).
-- As a user, I want to be able to view a list of the titles of ingredients in my pantry.
-- As a user, I want to be able to discard ingredients from my virtual pantry.
-- As a user, I want to be able to search for recipes that can be made using the ingredients currently
-  added to my virtual pantry.
-
-## Instructions for Grader
+## Instructions for User
 
 How to add a recipe to recipe list:
 1. From the home page, navigate to Recipes Tab by clicking the "Recipes" button at the top of the window or the
@@ -96,44 +77,26 @@ Alternative Saving and Loading Using Quit:
 <br>
    c) Click "Cancel" to cancel the quitting process and return back to Home tab.
 
-Visual Component:
-- A GIF can be found on the Home page.
+## User Stories
 
-## Phase 4: Event Log sample
+- As a user, I want to be able to create a new recipe with a name, specified ingredients and preparation time,
+and add it to a list of recipes.
+- As a user, I want to be able to view a list of the titles of the recipes in my collection.
+- As a user, I want to be able to delete a recipe from my collection.
+- As a user, I want to be able to select a recipe in my collection and view the recipe in detail.
 
-Sun Nov 26 14:30:03 PST 2023
-New recipe for Spaghetti created
+- As a user, when I select the quit option from the application menu, I want to be reminded to save my recipe book
+to file and have the option to do so or not.
+- As a user, I want to be given the option to load my recipe book from file.
 
-Sun Nov 26 14:30:03 PST 2023
-Recipe for Spaghetti added to recipe list
+User stories not implemented yet (for future use):
+- As a user, I want to be able to add ingredients to a list of ingredients (ie. a virtual pantry).
+- As a user, I want to be able to view a list of the titles of ingredients in my pantry.
+- As a user, I want to be able to discard ingredients from my virtual pantry.
+- As a user, I want to be able to search for recipes that can be made using the ingredients currently
+  added to my virtual pantry.
 
-Sun Nov 26 14:30:04 PST 2023
-Prep time for Spaghetti set to 30 minutes
-
-Sun Nov 26 14:30:07 PST 2023
-Noodles added to Spaghetti recipe
-
-Sun Nov 26 14:30:10 PST 2023
-Tomato Sauce added to Spaghetti recipe
-
-Sun Nov 26 14:30:13 PST 2023
-Meatballs added to Spaghetti recipe
-
-Sun Nov 26 14:30:18 PST 2023
-Recipe for Spaghetti viewed in detail
-
-Sun Nov 26 14:30:26 PST 2023
-Recipe for Spaghetti deleted from recipe list
-
-Sun Nov 26 14:30:28 PST 2023
-Recipe List saved
-
-Sun Nov 26 14:30:29 PST 2023
-Recipe List loaded
-
-Process finished with exit code 0
-
-## Phase 4: Task 3
+## Project Reflection/Future Considerations
 
 If I had more time to work on this project, I would refactor my methods so that they utilize more exceptions.
 Since exceptions were taught later in the semester, some of my methods produce false booleans instead of exceptions when
